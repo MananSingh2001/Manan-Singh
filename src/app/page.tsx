@@ -1,69 +1,52 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { IconBriefcase, IconBrandGithub, IconHome, IconMail, IconSchool, IconSparkles, IconUser } from "@tabler/icons-react";
+import { CloudShader } from "@/components/ui/cloud-shader";
+import { Carousel, type SkillCard } from "@/components/ui/apple-cards-carousel";
+import { PixelatedCanvas } from "@/components/ui/pixelated-canvas";
+import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
+import { LampContainer } from "@/components/ui/lamp";
+import { WobbleCard } from "@/components/ui/wobble-card";
+import { BackgroundLines } from "@/components/ui/background-lines";
+import { ProjectShowcase } from "@/components/project-showcase";
+import { FloatingNav } from "@/components/ui/floating-navbar";
+
+const skillGroups: SkillCard[] = [
+  { label: "01 / Languages", title: "The primitives", description: "Typed foundations for reliable product work.", skills: ["TypeScript", "JavaScript", "Python", "Java", "SQL"], tone: "tone-sky" },
+  { label: "02 / Frontend", title: "Interfaces that hold up", description: "React systems built for speed, clarity, and scale.", skills: ["React", "Next.js (App Router, RSC)", "Module Federation", "Redux Toolkit", "Core Web Vitals", "Jest", "React Testing Library", "Cypress"], tone: "tone-lilac" },
+  { label: "03 / Backend", title: "The engine room", description: "Typed APIs and durable services behind the interface.", skills: ["Node.js", "Express", "GraphQL", "Spring Boot", "PostgreSQL", "Liquibase", "Redis", "WebSockets", "REST API design"], tone: "tone-ink" },
+  { label: "04 / Agentic AI", title: "Tools that think", description: "Grounded agents that can operate real systems.", skills: ["LangGraph", "MCP server development", "Tool-calling agents", "RAG (pgvector)", "Cross-encoder reranking", "LLM evaluation", "Hit-rate@k", "MRR", "LLM-as-judge"], tone: "tone-yellow" },
+  { label: "05 / Cloud & Delivery", title: "From commit to cloud", description: "Delivery systems that make shipping repeatable.", skills: ["GCP Cloud Run", "AWS", "Docker", "Kubernetes", "GitHub Actions", "Jenkins", "CI/CD"], tone: "tone-mint" },
+  { label: "06 / Identity & Security", title: "Trust by default", description: "Access patterns that work across enterprise products.", skills: ["Keycloak", "OIDC", "OAuth2", "SSO", "Server-side RBAC", "JWT"], tone: "tone-coral" },
+];
+
+const experienceHighlights = [
+  ["Micro-frontend platform", "Architected and shipped a registry-driven micro-frontend platform with React, TypeScript, and Module Federation. Adopted by 10+ product teams for independent deployments; cut cross-team release coordination from ~3 weeks to 1–2 days. Top contributor over the platform's lifetime."],
+  ["Agentic AI service", "Built a production LangGraph multi-agent service in Python that runs CI/CD and DevOps operations through MCP tool servers. Added PostgreSQL-backed task persistence, resume-from-checkpoint flows, and WebSocket + REST interfaces for the platform UI."],
+  ["Enterprise identity", "Designed and rolled out Keycloak-based SSO with OIDC/OAuth2 across 10+ applications, synchronized sessions, and server-side RBAC, eliminating a recurring class of cross-app authentication and session-expiry failures."],
+  ["Backend-for-frontend", "Built a Node.js/GraphQL BFF aggregating multiple upstream services into one typed schema consumed by every micro-frontend, replacing per-app REST fan-out and cutting page round trips to one."],
+  ["Web performance", "Optimized the Next.js 15 shell's Core Web Vitals: LCP 4.2 s → 1.7 s through server rendering, image preloading, route-level code splitting, and shared-dependency de-duplication across federated modules."],
+  ["State & quality standards", "Standardized Redux Toolkit state management and Jest/RTL testing across 10+ apps; removed redundant re-renders in shared components and established the platform repo's code-review checklist."],
+  ["Technical leadership", "Led a 4-engineer squad delivering real-time CI/CD telemetry dashboards end to end: design reviews, task breakdown, code review, and release, while remaining hands-on across frontend and backend."],
+] as const;
 
 export default function Home() {
+  const [activeExperience, setActiveExperience] = useState<number | null>(null);
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="portfolio">
+      <CloudShader className="site-background" speed={0.7} count={6} skyTopColor="#3876ba" skyBottomColor="#b7d9ed" />
+      <nav className="topbar" aria-label="Main navigation"><a className="wordmark" href="#top">MANAN SINGH<span>.</span></a><div className="nav-links"><a href="#about">About</a><a href="#skills">Skills</a><a href="mailto:singhmanan2001@gmail.com">Let&apos;s talk <span>↗</span></a></div></nav><FloatingNav navItems={[{ name: "Home", link: "#top", icon: <IconHome size={16} /> }, { name: "About", link: "#about", icon: <IconUser size={16} /> }, { name: "Skills", link: "#skills", icon: <IconSparkles size={16} /> }, { name: "Experience", link: "#experience", icon: <IconBriefcase size={16} /> }, { name: "Education", link: "#education", icon: <IconSchool size={16} /> }, { name: "Projects", link: "#projects", icon: <IconSparkles size={16} /> }, { name: "Contact", link: "#contact", icon: <IconMail size={16} /> }]} />
+      <section className="hero-split" id="top"><div className="portrait-panel"><div className="portrait-placeholder pixel-portrait"><PixelatedCanvas src="/MANAN%20SINGH.png" width={500} height={620} cellSize={4} dotScale={0.9} interactive distortionStrength={7} distortionRadius={120} tintColor="#ffffff" tintStrength={0.05} /></div><div className="portrait-caption"><span>Manan Singh</span><span>Senior Software Engineer</span></div></div><div className="hero-summary"><p className="eyebrow">Software Engineer <span>Bengaluru, India</span></p><h1>Systems that<br /><em>move ideas forward.</em></h1><p className="summary">I build production-grade platforms, full-stack products, and agentic AI systems for teams solving difficult problems.</p><div className="hero-links"><a href="mailto:singhmanan2001@gmail.com">singhmanan2001@gmail.com <span>↗</span></a><a href="https://github.com/MananSingh2001" target="_blank" rel="noreferrer"><IconBrandGithub size={16} /> GitHub</a><a href="https://linkedin.com/in/manan-singh-sde" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a></div></div></section>
+      <section className="intro-section" id="about"><p className="eyebrow">01 / Professional summary</p><div className="intro-grid"><h2>Full-stack engineer<br /><em>with a systems mind.</em></h2><div><p>Senior Software Engineer I at HCLSoftware with 3 years of experience building production systems used by 10+ product teams.</p><p>I work across frontend architecture, backend services, cloud delivery, identity, and applied AI. My work has cut release coordination from roughly 3 weeks to 1–2 days and improved a Next.js shell&apos;s LCP from 4.2s to 1.7s.</p></div></div></section>
+      <section className="skills-reveal" id="skills"><div className="skills-heading"><p className="eyebrow">02 / Toolkit</p><h2>Every system<br /><em>has a shape.</em></h2><p>Explore the tools and disciplines I bring to a build. Click a card to open the full view.</p></div><Carousel items={skillGroups} /></section><span id="experience" className="section-anchor" aria-hidden="true" />
+      <section className="experience-section experience-lamp-section" style={{ maxWidth: "none", width: "100vw", marginLeft: "calc(50% - 50vw)", marginRight: "calc(50% - 50vw)" }}><LampContainer className="experience-lamp"><div className="experience-inner"><div className="experience-kicker"><p className="eyebrow">03 / Experience</p><p>Platform and applied-AI engineering<br />for 10+ product teams.</p></div><div className="experience-heading"><div><h2>Experience<br /><em>at HCLSoftware.</em></h2><p className="experience-role"><strong>HCLSoftware (HCL Technologies)</strong><br />Senior Software Engineer I · Bengaluru<br />Oct 2023 — Present</p></div><p>DevOps product suite<br />Enterprise customers</p></div><div className="experience-grid-new">{experienceHighlights.map(([title, description], index) => <WobbleCard containerClassName="experience-card" key={title}><CanvasRevealEffect active={activeExperience === index} className="experience-reveal" /><div className="experience-card-content" onMouseEnter={() => setActiveExperience(index)} onMouseLeave={() => setActiveExperience(null)}><span>0{index + 1}</span><h3>{title}</h3><p>{description}</p></div></WobbleCard>)}</div></div></LampContainer></section>
+      <section className="education-section"><BackgroundLines><div className="education-inner"><p className="eyebrow">04 / Education &amp; certifications</p><div className="education-grid"><div><h2>Computer Science<br /><em>in practice.</em></h2><p className="degree">B.Tech, Computer Science &amp; Engineering</p><p className="institution">Raj Kumar Goel Institute of Technology (AKTU)</p><p className="education-meta">2023 <span>CGPA 8.58 / 10</span></p></div><div className="certifications"><p className="certification-label">Certifications</p><div className="certification-list"><div><strong>Anthropic MCP Developer</strong><span>Core + Advanced</span></div><div><strong>Google Cloud Gen AI Academy APAC</strong><span>2026</span></div><div><strong>AWS Certified Cloud Practitioner</strong><span>Cloud foundations</span></div></div></div></div></div></BackgroundLines></section>
+      <section className="projects-section"><div className="projects-inner"><div className="projects-heading"><p className="eyebrow">05 / Source &amp; projects</p><h2>Work that<br /><em>travels.</em></h2><p>Open-source systems, published tools, and experiments with receipts.</p></div><div className="project-feature"><div className="project-number">01</div><div className="project-copy"><p className="project-type">Sourcebound · Grounded RAG assistant</p><h3>Answers with<br /><em>evidence.</em></h3><p>Node.js + Supabase pgvector pipeline with inline citations. A Cohere cross-encoder reranker raised hit-rate@5 from 91.9% to 100% and MRR from 0.73 to 0.94 across a 37-query evaluation set.</p><p>Its 16-case adversarial suite recorded 0% false refusals while resisting every prompt-injection attempt, supported by threshold refusal, retry/backoff, and provider fallback.</p><div className="project-links"><a href="https://github.com/MananSingh2001/Sourcebound" target="_blank" rel="noreferrer">GitHub <span>↗</span></a><a href="https://sourcebound-one.vercel.app" target="_blank" rel="noreferrer">Live demo <span>↗</span></a></div></div><div className="project-metrics"><strong>100%</strong><span>hit-rate@5</span><strong>0.94</strong><span>MRR after reranking</span></div></div><div className="project-grid"><article><span>02 / MCP</span><h3>figma-react-mcp-server</h3><p>Authored and published an MCP server through npm and the official MCP Registry, exposing Figma design data as tools so agents can generate React components from designs.</p><a href="https://github.com/MananSingh2001" target="_blank" rel="noreferrer">View on GitHub ↗</a></article><article><span>03 / Contributions</span><h3>Open source, upstream.</h3><p>Pull requests merged into Vite, with 79k+ stars, and the Model Context Protocol registry.</p><a href="https://github.com/MananSingh2001" target="_blank" rel="noreferrer">See contributions ↗</a></article><article><span>04 / Optimization</span><h3>Hotel Room Reservation</h3><p>React and Vite booking system for 97 rooms across 10 floors. Uses combinatorial search to prioritize same-floor rooms and minimize travel time across floors, with booking history and a visual floor plan.</p><a href="https://github.com/MananSingh2001/hotel-room-reservation" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>05 / Product</span><h3>Project Atlas</h3><p>Luxury and adventure travel planner built with Next.js, Supabase, Three.js, GSAP, and Mapbox, with destination discovery, itinerary planning, wishlist, reviews, and OAuth.</p><a href="https://github.com/MananSingh2001/project-atlas" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>06 / Identity</span><h3>Secure-Nexus IAM</h3><p>Production-grade Keycloak and Auth.js identity dashboard using OIDC federated logout, synchronized SSO sessions, advanced RBAC, and server-side session validation.</p><a href="https://github.com/MananSingh2001/secure-IAM" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>07 / Infrastructure</span><h3>Nexus Core</h3><p>TypeScript Node.js event-processing backend using Express and Redis producer-consumer patterns for asynchronous audit logging, with Docker-based infrastructure and Zod contracts.</p><a href="https://github.com/MananSingh2001/nexus-core" target="_blank" rel="noreferrer">View repository ↗</a></article></div></div></section>
+      <div className="project-grid project-grid-continued"><article><span>08 / Platform</span><h3>Nexus Dashboard Platform</h3><p>Enterprise micro-frontend orchestration platform where PostgreSQL stores widget manifests, Spring Boot exposes the registry, and a Next.js shell injects independently deployed widgets at runtime with API-level RBAC and zero host rebuilds.</p><a href="https://github.com/MananSingh2001/nexus-dashboard-platform" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>09 / Agentic AI</span><h3>Manan Agent</h3><p>Gemini 2.0 Flash multi-agent project-management system with a React/Vite interface, Express orchestrator, Supabase task agent, GitHub repository agent, and Gemini-powered notes agent, containerized for Cloud Run.</p><a href="https://github.com/MananSingh2001/MananAgent-ProjectMgmt" target="_blank" rel="noreferrer">View repository ↗</a><a className="project-live-link" href="https://manan-agent-332997736058.us-central1.run.app" target="_blank" rel="noreferrer">Live demo ↗</a></article></div><div className="project-live-strip"><span>Live builds</span><a href="https://hotel-room-reservation-beta.vercel.app/" target="_blank" rel="noreferrer">Hotel Room Reservation ↗</a><a href="https://travelsite-indol.vercel.app/" target="_blank" rel="noreferrer">Project Atlas ↗</a></div>
+      <section className="unified-projects"><div className="unified-projects-inner"><p className="eyebrow">05 / Source &amp; projects</p><h2>Everything I&apos;ve<br /><em>built along the way.</em></h2><div className="unified-project-list"><article className="unified-feature"><span>01 / Grounded AI</span><h3>Sourcebound</h3><p>Node.js + Supabase pgvector RAG assistant with inline citations. Cohere reranking raised hit-rate@5 from 91.9% to 100% and MRR from 0.73 to 0.94 across 37 queries.</p><div className="unified-links"><a href="https://github.com/MananSingh2001/Sourcebound" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://sourcebound-one.vercel.app" target="_blank" rel="noreferrer">Live demo ↗</a></div></article><article><span>02 / MCP</span><h3>figma-react-mcp-server</h3><p>Published MCP server exposing Figma design data as tools so agents can generate React components from designs.</p><a href="https://github.com/MananSingh2001" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>03 / Contributions</span><h3>Open source, upstream.</h3><p>Pull requests merged into Vite and the Model Context Protocol registry.</p><a href="https://github.com/MananSingh2001" target="_blank" rel="noreferrer">See contributions ↗</a></article><article><span>04 / Optimization</span><a className="unified-live-link" href="https://hotel-room-reservation-beta.vercel.app/" target="_blank" rel="noreferrer">Live build ↗</a><h3>Hotel Room Reservation</h3><p>React and Vite booking system for 97 rooms across 10 floors using combinatorial search to minimize travel time.</p><a href="https://github.com/MananSingh2001/hotel-room-reservation" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>05 / Product</span><a className="unified-live-link" href="https://travelsite-indol.vercel.app/" target="_blank" rel="noreferrer">Live build ↗</a><h3>Project Atlas</h3><p>Luxury and adventure travel planner built with Next.js, Supabase, Three.js, GSAP, and Mapbox.</p><a href="https://github.com/MananSingh2001/project-atlas" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>06 / Identity</span><h3>Secure-Nexus IAM</h3><p>Keycloak and Auth.js identity dashboard with OIDC federated logout, synchronized SSO, RBAC, and server-side session validation.</p><a href="https://github.com/MananSingh2001/secure-IAM" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>07 / Infrastructure</span><h3>Nexus Core</h3><p>TypeScript Node.js event-processing backend using Express and Redis producer-consumer patterns for asynchronous audit logging.</p><a href="https://github.com/MananSingh2001/nexus-core" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>08 / Platform</span><h3>Nexus Dashboard Platform</h3><p>Registry-driven micro-frontend platform with a Next.js shell, Spring Boot registry, PostgreSQL manifests, runtime widget injection, and API-level RBAC.</p><a href="https://github.com/MananSingh2001/nexus-dashboard-platform" target="_blank" rel="noreferrer">View repository ↗</a></article><article><span>09 / Agentic AI</span><h3>Manan Agent</h3><p>Gemini 2.0 Flash multi-agent project-management system with React/Vite, Express, Supabase, GitHub, and Cloud Run.</p><div className="unified-links"><a href="https://github.com/MananSingh2001/MananAgent-ProjectMgmt" target="_blank" rel="noreferrer">Repository ↗</a><a href="https://manan-agent-332997736058.us-central1.run.app" target="_blank" rel="noreferrer">Live demo ↗</a></div></article></div></div></section>
+      <span id="education" className="section-anchor" aria-hidden="true" /><span id="projects" className="section-anchor" aria-hidden="true" /><ProjectShowcase />
+      <footer id="contact" className="footer"><p><small>06 / Contact</small><br />Let&apos;s connect<br /><em>and build well.</em></p><a href="mailto:singhmanan2001@gmail.com">singhmanan2001@gmail.com <span>↗</span></a><div className="footer-bottom"><span>© 2026 Manan Singh</span><span><a href="https://linkedin.com/in/manan-singh-sde" target="_blank" rel="noreferrer">LinkedIn</a>&nbsp;&nbsp; <a href="https://github.com/MananSingh2001" target="_blank" rel="noreferrer">GitHub</a></span><span>Open source contributor</span></div></footer>
+    </main>
   );
 }
